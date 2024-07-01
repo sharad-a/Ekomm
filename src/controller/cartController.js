@@ -1,5 +1,6 @@
 const User = require('../models/userModel');
 const Product = require('../models/productModel');
+const userModel = require('../models/userModel');
 
 
 // add product to cart
@@ -46,7 +47,7 @@ const getCartItems = async (req, res) => {
 
     try {
         const userId = req.userId;
-        
+
         const user = await User.findById(userId).populate('cart.product');
 
         if (!user) {
@@ -79,7 +80,7 @@ const removeFromCart = async (req, res) => {
 
         // Remove the product from the cart
         user.cart.splice(cartIndex, 1);
-        
+
         await user.save();
 
         res.status(200).json({ message: 'Product removed from cart successfully', cart: user.cart });
@@ -89,4 +90,24 @@ const removeFromCart = async (req, res) => {
     }
 };
 
-module.exports = { addToCart, getCartItems, removeFromCart };
+const deleteCart = async (req, res) => {
+    try {
+        const { userId } = req.body;
+
+        const user = await User.findById(userId);
+        if (!user) {
+            return res.status(404).json({ message: 'User not found' });
+        }
+
+        // console.log("delete cart")
+        await userModel.updateOne({ _id: userId }, { cart: [] });
+        await user.save();
+
+        res.status(200).json({ message: 'Product removed from cart successfully', cart: user.cart });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Internal server error' });
+    }
+}
+
+module.exports = { addToCart, getCartItems, removeFromCart, deleteCart };
