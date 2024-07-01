@@ -56,12 +56,13 @@ async function Verify(req, res, next) {
     } catch (err) {
         console.log("Verify error: ", err);
 
-        res.status(500).json({
-            status: "error",
-            code: 500,
-            data: [],
-            message: "Internal Server Error",
-        });
+        res.status(500)
+        // .json({
+        //     status: "error",
+        //     code: 500,
+        //     data: [],
+        //     message: "Internal Server Error",
+        // });
     }
 }
 
@@ -84,12 +85,13 @@ function VerifyRole(req, res, next) {
     } catch (err) {
         console.log("Verify Role: ", err);
 
-        res.status(500).json({
-            status: "error",
-            code: 500,
-            data: [],
-            message: "Internal Server Error",
-        });
+        res.status(500)
+        // .json({
+        //     status: "error",
+        //     code: 500,
+        //     data: [],
+        //     message: "Internal Server Error",
+        // });
     }
 }
 
