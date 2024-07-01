@@ -81,10 +81,6 @@ async function Login(req, res) {
             user.password
         );
 
-        // console.log("db password: ", user.password);
-        // console.log("res password: ", req.body.password);
-        // console.log("isPasswordValid: ", isPasswordValid);
-
         // if not valid return unauthorized response
         if (!isPasswordValid)
             return res.status(401).json({
